@@ -1,1 +1,57 @@
+version: 0.2
+
+env:
+  variables:
+    ImageName: "version: 0.2
+
+env:
+  variables:
+    ImageName: "aar_logo_final.png"
+    AWS_ACCOUNT_ID: "377726813022"
+    AWS_REGION: "ap-south-1"
+    ECR_REPO_NAME: "my-ecr-repo"
+
+phases:
+  pre_build:
+    commands:
+      - echo "Logging in to Amazon ECR..."
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+  build:
+    commands:
+      - echo "Building Docker image..."
+      - docker build -t $ImageName .
+      - echo "Checking ImageName variable..."
+      - echo "ImageName is: $ImageName"
+      - echo "Verifying Docker image..."
+      - docker images
+      - echo "Tagging Docker image..."
+      - docker tag $ImageName:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO_NAME:latest
+  post_build:
+    commands:
+      - echo "Pushing Docker image to Amazon ECR..."
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO_NAME:latest
+"
+    AWS_ACCOUNT_ID: "377726813022"
+    AWS_REGION: "ap-south-1"
+    ECR_REPO_NAME: "my-ecr-repo"
+
+phases:
+  pre_build:
+    commands:
+      - echo "Logging in to Amazon ECR..."
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+  build:
+    commands:
+      - echo "Building Docker image..."
+      - docker build -t $ImageName .
+      - echo "Checking ImageName variable..."
+      - echo "ImageName is: $ImageName"
+      - echo "Verifying Docker image..."
+      - docker images
+      - echo "Tagging Docker image..."
+      - docker tag $ImageName:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO_NAME:latest
+  post_build:
+    commands:
+      - echo "Pushing Docker image to Amazon ECR..."
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO_NAME:latest
 
