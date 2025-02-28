@@ -1,8 +1,5 @@
 version: 0.2
 
-env:
-  variables:
-    ImageName: "version: 0.2
 
 env:
   variables:
